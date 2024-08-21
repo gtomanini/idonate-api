@@ -30,4 +30,14 @@ public class CategoryController {
     private Category create(@RequestBody Category category) {
         return categoryService.save(category);
     }
+
+    @PutMapping
+    private Category update(@RequestBody Category category) {
+        return categoryService.save(category);
+    }
+
+    @DeleteMapping
+    private void delete(@RequestBody Category category) {
+        categoryService.delete(category);
+    }
 }

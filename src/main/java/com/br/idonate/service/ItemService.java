@@ -34,4 +34,9 @@ public class ItemService{
         return itemRepository.save(item);
     }
 
+    public Item delete(Item item){
+        itemRepository.delete(item);
+        return item;
+    }
+
 }

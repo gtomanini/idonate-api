@@ -31,4 +31,14 @@ public class ItemController {
         return ResponseEntity.ok(itemService.save(item));
     }
 
+    @PutMapping
+    public ResponseEntity<Item> update(@RequestBody Item item) {
+        return ResponseEntity.ok(itemService.save(item));
+    }
+
+    @DeleteMapping
+    public ResponseEntity<Item> delete(@RequestBody Item item) {
+        return ResponseEntity.ok(itemService.delete(item));
+    }
+
 }
