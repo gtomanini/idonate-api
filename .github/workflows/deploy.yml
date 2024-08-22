@@ -24,7 +24,10 @@ jobs:
 
       - name: Copy files to EC2
         run: |
-            scp -i ${{ secrets.EC2_KEY }} -r . ubuntu@${{ secrets.EC2_HOST }}:/home/ubuntu/idonate-api
+          mkdir -p ~/.ssh
+          echo "${{ secrets.EC2_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          scp -i ~/.ssh/id_rsa -r . ubuntu@${{ secrets.EC2_HOST }}:/home/ubuntu/idonate-api
 
 #      - name: Build Docker image
 #        run: |
