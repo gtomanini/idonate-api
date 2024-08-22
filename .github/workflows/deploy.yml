@@ -22,17 +22,12 @@ jobs:
       - name: Build with Maven
         run: mvn package
 
-      - name: Add EC2 host key
-        run: |
-          mkdir -p ~/.ssh
-          ssh-keyscan -H ${{ secrets.EC2_HOST }} >> ~/.ssh/known_hosts
-
       - name: Copy files to EC2
         run: |
           mkdir -p ~/.ssh
           echo "${{ secrets.EC2_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-          scp -i ~/.ssh/id_rsa -r . ubuntu@${{ secrets.EC2_HOST }}:/home/ubuntu/idonate-api
+          scp -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa -r * ubuntu@${{ secrets.EC2_HOST }}:/home/ubuntu/idonate-api
 
 #      - name: Build Docker image
 #        run: |
