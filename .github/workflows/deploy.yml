@@ -22,6 +22,11 @@ jobs:
       - name: Build with Maven
         run: mvn package
 
+      - name: Add EC2 host key
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -H ${{ secrets.EC2_HOST }} >> ~/.ssh/known_hosts
+
       - name: Copy files to EC2
         run: |
           mkdir -p ~/.ssh
