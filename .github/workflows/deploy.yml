@@ -22,9 +22,13 @@ jobs:
       - name: Build with Maven
         run: mvn package
 
-      - name: Build Docker image
+      - name: Copy files to EC2
         run: |
-          docker build -t idonate-api .
+            scp -i ${{ secrets.EC2_KEY }} -r . ubuntu@${{ secrets.EC2_HOST }}:/home/ubuntu/idonate-api
+
+#      - name: Build Docker image
+#        run: |
+#          docker build -t idonate-api .
 
       - name: Log in to EC2 via SSH and Deploy
         uses: appleboy/ssh-action@v0.1.10
@@ -32,6 +36,11 @@ jobs:
           host: ${{ secrets.EC2_HOST }}
           username: ubuntu
           key: ${{ secrets.EC2_KEY }}
+          port: 22
           script: |
-            docker pull idonate-api:latest
+            cd /home/ubuntu/idonate-api
+            docker build -t idonate-api .
             docker run -d -p 8080:8080 idonate-api
+#          script: |
+#            docker pull idonate-api:latest
+#            docker run -d -p 8080:8080 idonate-api
