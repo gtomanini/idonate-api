@@ -30,7 +30,7 @@ jobs:
 #          scp -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa -r * ubuntu@${{ secrets.EC2_HOST }}:/home/ubuntu/idonate-api
 
       - name: Log in to EC2 via SSH and Deploy
-        uses: appleboy/ssh-action@v0.1.10
+        uses: appleboy/ssh-action@v0.1.0
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ubuntu
@@ -44,7 +44,7 @@ jobs:
 #            docker run -d -p 8080:8080 idonate-api
 
       - name: Execute SSH command
-        uses: appleboy/ssh-action@v0.1.1
+        uses: appleboy/ssh-action@v0.1.10
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ubuntu
