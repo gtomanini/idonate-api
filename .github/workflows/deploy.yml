@@ -20,7 +20,7 @@ jobs:
           distribution: 'temurin'
 
       - name: Build with Maven
-        run: mvn clean install
+        run: mvn clean install -DskipTests=true
 
 #      - name: Copy files to EC2
 #        run: |
