@@ -38,13 +38,14 @@ jobs:
           port: 22
           source: "target/idonate-0.0.1-SNAPSHOT.jar"
           target: "/home/ec2-user/"
-#          script: |
+          script: |
+            echo "Dados SSH. Host: ${{ secrets.EC2_HOST }}. Key: ${{ secrets.EC2_KEY }}"
 #            cd /home/ubuntu/idonate-api
 #            docker build -t idonate-api .
 #            docker run -d -p 8080:8080 idonate-api
 
       - name: Execute SSH command
-        uses: appleboy/ssh-action@master
+        uses: appleboy/ssh-action@1.0.3
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ubuntu
