@@ -20,18 +20,14 @@ jobs:
           distribution: 'temurin'
 
       - name: Build with Maven
-        run: mvn package
+        run: mvn clean install
 
-      - name: Copy files to EC2
-        run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.EC2_KEY }}" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          scp -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa -r * ubuntu@${{ secrets.EC2_HOST }}:/home/ubuntu/idonate-api
-
-#      - name: Build Docker image
+#      - name: Copy files to EC2
 #        run: |
-#          docker build -t idonate-api .
+#          mkdir -p ~/.ssh
+#          echo "${{ secrets.EC2_KEY }}" > ~/.ssh/id_rsa
+#          chmod 600 ~/.ssh/id_rsa
+#          scp -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa -r * ubuntu@${{ secrets.EC2_HOST }}:/home/ubuntu/idonate-api
 
       - name: Log in to EC2 via SSH and Deploy
         uses: appleboy/ssh-action@v0.1.10
@@ -40,10 +36,19 @@ jobs:
           username: ubuntu
           key: ${{ secrets.EC2_KEY }}
           port: 22
-          script: |
-            cd /home/ubuntu/idonate-api
-            docker build -t idonate-api .
-            docker run -d -p 8080:8080 idonate-api
+          source: "target/idonate-0.0.1-SNAPSHOT.jar"
+          target: "/home/ec2-user/"
 #          script: |
-#            docker pull idonate-api:latest
+#            cd /home/ubuntu/idonate-api
+#            docker build -t idonate-api .
 #            docker run -d -p 8080:8080 idonate-api
+
+      - name: Execute SSH command
+        uses: appleboy/ssh-action@v0.1.1
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ubuntu
+          key: ${{ secrets.EC2_KEY }}
+          script: |
+            pkill -f 'java -jar' || true
+            nohup java -jar /home/ec2-user/sua-aplicacao.jar > /dev/null 2>&1 &
