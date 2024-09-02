@@ -18,16 +18,13 @@ public class BaseModel {
 
 
     @Temporal(TemporalType.TIMESTAMP)
-    @JsonIgnore
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @JsonIgnore
     private LocalDateTime updatedAt;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @JsonIgnore
     @Column(nullable = true)
     private LocalDateTime deletedAt;
 

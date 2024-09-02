@@ -40,7 +40,7 @@ jobs:
           key: ${{ secrets.EC2_KEY }}
           port: 22
           source: "target/idonate-0.0.1-SNAPSHOT.jar"
-          target: "/home/ubuntu/idonate-0.0.1-SNAPSHOT.jar"
+          target: "/home/ubuntu/"
           debug: true
           script: |
             echo "Dados SSH. Host: ${{ secrets.EC2_HOST }}. Key: ${{ secrets.EC2_KEY }}"
