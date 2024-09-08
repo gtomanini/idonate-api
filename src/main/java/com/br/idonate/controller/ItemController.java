@@ -21,9 +21,12 @@ public class ItemController {
 
     @GetMapping
     public ResponseEntity<Page<ItemDTO>> index(@RequestParam(required = false, defaultValue = "0") int pageNumber,
-                                               @RequestParam(required = false, defaultValue = "10") int pageSize) {
+                                               @RequestParam(required = false, defaultValue = "10") int pageSize,
+                                                @RequestParam(required = false) String name,
+                                               @RequestParam(required = false) String description,
+                                               @RequestParam(required = false) String category) {
 
-        ItemSearchCriteria criteria = new ItemSearchCriteria();
+        ItemSearchCriteria criteria = new ItemSearchCriteria(name, description, category);
         return ResponseEntity.ok(itemService.findItems(criteria, pageNumber, pageSize));
     }
 

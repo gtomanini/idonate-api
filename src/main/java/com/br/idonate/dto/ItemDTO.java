@@ -1,4 +1,8 @@
 package com.br.idonate.dto;
 
-public record ItemDTO(Long id, String name, String description) {
+import com.br.idonate.model.Category;
+
+import java.util.List;
+
+public record ItemDTO(Long id, String name, String description, List<CategoryDTO> categories) {
 }
