@@ -1,6 +1,7 @@
 package com.br.idonate.controller;
 
 
+import com.br.idonate.dto.CategoryDTO;
 import com.br.idonate.model.Category;
 import com.br.idonate.model.Item;
 import com.br.idonate.searchCriteria.CategorySearchCriteria;
@@ -19,8 +20,8 @@ public class CategoryController {
     private CategoryService categoryService;
 
     @GetMapping
-    public ResponseEntity<Page<Category>> index(@RequestParam(required = false, defaultValue = "0") int pageNumber,
-                                            @RequestParam(required = false, defaultValue = "10") int pageSize) {
+    public ResponseEntity<Page<CategoryDTO>> index(@RequestParam(required = false, defaultValue = "0") int pageNumber,
+                                                   @RequestParam(required = false, defaultValue = "10") int pageSize) {
 
         CategorySearchCriteria criteria = new CategorySearchCriteria();
         return ResponseEntity.ok(categoryService.findCategories(criteria, pageNumber, pageSize));
