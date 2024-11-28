@@ -11,6 +11,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
+
 
 @RestController
 @RequestMapping("/items")
@@ -20,14 +24,21 @@ public class ItemController {
     private  ItemService itemService;
 
     @GetMapping
-    public ResponseEntity<Page<ItemDTO>> index(@RequestParam(required = false, defaultValue = "0") int pageNumber,
+    public ResponseEntity<List<ItemDTO>> index(@RequestParam(required = false, defaultValue = "0") int pageNumber,
                                                @RequestParam(required = false, defaultValue = "10") int pageSize,
-                                                @RequestParam(required = false) String name,
+                                               @RequestParam(required = false) String name,
                                                @RequestParam(required = false) String description,
                                                @RequestParam(required = false) String category) {
 
         ItemSearchCriteria criteria = new ItemSearchCriteria(name, description, category);
-        return ResponseEntity.ok(itemService.findItems(criteria, pageNumber, pageSize));
+        return ResponseEntity.ok(itemService.findItems(criteria, pageNumber, pageSize).stream()
+                .collect(Collectors.toList()));
+    }
+
+    @GetMapping("/testa")
+    public String retornaTesta()
+    {
+        return itemService.retorna("Feito");
     }
 
     @PostMapping

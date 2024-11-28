@@ -14,6 +14,6 @@ import lombok.Setter;
 @Setter
 public class RoleUser extends BaseModel{
 
-    @Enumerated(EnumType.STRING)
-    private RoleName name;
+//    @Enumerated(EnumType.STRING)
+//    private RoleName name;
 }

@@ -1,6 +1,7 @@
 package com.br.idonate.utils;
 
 public enum RoleName {
-    ROLE_CUSTOMER,
-    ROLE_ADMINISTRATOR
+    ROLE_USER,
+    ROLE_ADMINISTRATOR,
+    ROLE_VISITOR
 }

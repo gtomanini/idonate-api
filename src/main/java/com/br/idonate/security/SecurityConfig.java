@@ -34,11 +34,13 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
                         .requestMatchers(HttpMethod.GET, "/items").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/items/teste").permitAll()
                         .requestMatchers(HttpMethod.GET, "/categories").permitAll()
                         .requestMatchers(HttpMethod.GET, "/swagger-ui/*").permitAll()
                         .requestMatchers(HttpMethod.GET, "/swagger-ui.html").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api-docs").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api-docs/*").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/items").hasAnyRole("USER", "ADMINISTRATOR")
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class);

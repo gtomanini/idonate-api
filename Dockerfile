@@ -1,17 +1,14 @@
-FROM eclipse-temurin:21-jdk
+# Usando uma imagem base do JDK
+FROM openjdk:21-jdk-slim
 
-ENV CATALINA_HOME /opt/tomcat
+# Definir o diretório de trabalho no contêiner
+WORKDIR /app
 
-RUN mkdir -p "$CATALINA_HOME"
+# Copiar o arquivo JAR gerado para o contêiner
+COPY target/idonate-0.0.1-SNAPSHOT.jar app.jar
 
-RUN curl -O https://downloads.apache.org/tomcat/tomcat-9/v9.0.93/bin/apache-tomcat-9.0.93-deployer.tar.gz \
-    && ls -l apache-tomcat-9.0.93-deployer.tar.gz \
-    && tar xf apache-tomcat-9.0.93-deployer.tar.gz --strip-components=1 \
-    && rm apache-tomcat-9.0.93-deployer.tar.gz \
-    && rm -rf webapps/*
-
-COPY target/idonate-0.0.1-SNAPSHOT.war $CATALINA_HOME/webapps/
-
+# Expor a porta utilizada pela aplicação
 EXPOSE 8080
 
-CMD ["bin/catalina.sh", "run"]
+# Comando para rodar a aplicação
+ENTRYPOINT ["java", "-jar", "app.jar"]
